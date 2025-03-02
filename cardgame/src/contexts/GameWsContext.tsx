@@ -5,6 +5,7 @@ import { useContext, useEffect } from 'react';
 import GameRoom from '../lib/entity/game/Room';
 import Player from '../lib/entity/game/Player';
 import { useAuth } from './AuthContext';
+import { usePopups } from './PopupContext';
 
 const SOCKET_URL = 'http://localhost:8080/ws';
 
@@ -14,7 +15,7 @@ export interface GameContextType {
   joinRoom: (roomid: string) => void;
   createRoom: () => void;
   messages: string[];
-
+  sendMessage: (topic: string, message: any) => void;
 }
 
 
@@ -31,6 +32,7 @@ export const GameContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const subscriptions = useRef(new Map<string, any>()); 
   const [messages, setMessages] = useState<string[]>([]);
   const {user} = useAuth();
+  const {addPopup} = usePopups();
 
   //initialize connection
   useEffect(() => {
@@ -53,7 +55,16 @@ export const GameContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
         onConnect: () => {
           console.log('Connected to WebSocket');
           setConnected(true);
-          // stompClient?.subscribe("/user/")
+          //broadcast chat
+          client.subscribe("/topic/chat", (message) => {
+            const data = JSON.parse(message.body)
+            addPopup(data.user.username +": " + data.message)
+          })
+          //user recieved messages:
+          client.subscribe("/user/queue/messages", (message) => {
+            const data = JSON.parse(message.body)
+            addPopup(data.user.username+": "+ data.message)
+          });
         },
         onStompError: (error) => console.error('STOMP Error:', error),
         onDisconnect: () => {
@@ -78,6 +89,16 @@ export const GameContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
   }, [user]);
 
+  const sendMessage = (topic: string, message: string) => {
+    if (stompClient && stompClient.connected) {
+      stompClient.publish({
+        destination: `/app/${topic}`,
+        body: JSON.stringify( message ),
+      });
+    } else {
+      console.error('WebSocket is not connected!');
+    }
+  };
 
   const joinRoom = async (roomId: string) => {
 
@@ -93,7 +114,7 @@ export const GameContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
 
 
-  return <GameContext.Provider value={{ room, self, joinRoom, createRoom, messages }}>{children}</GameContext.Provider>;
+  return <GameContext.Provider value={{ room, self, joinRoom, createRoom, messages, sendMessage}}>{children}</GameContext.Provider>;
 };
 
 export const useGameContext = (): GameContextType => {
