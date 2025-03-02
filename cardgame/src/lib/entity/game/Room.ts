@@ -10,4 +10,7 @@ export default interface GameRoom {
     owner: Player;
     playCardPack: PlayCardPack;
     promptCardPack: PromptCardPack;
+    isStarted: boolean;
+    winner: Player | undefined;
+    gameEnded: boolean;
 }

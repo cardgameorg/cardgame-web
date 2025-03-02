@@ -3,6 +3,5 @@ export default interface RoomSettings {
     rounds: number;
     deckCards: number;
     roundTime: 0 | 30 | 60 | 90;
-    isStarted: boolean;
 
 }

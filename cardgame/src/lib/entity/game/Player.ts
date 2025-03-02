@@ -6,6 +6,6 @@ export default interface Player extends User {
     isReady: boolean;
     points: number;
     index:number;
-    ownedPlayCards: PlayCard[];
-    ownedPromptCards: PromptCard[];
+    ownedPlayCards?: PlayCard[];
+    ownedPromptCards?: PromptCard[];
 }

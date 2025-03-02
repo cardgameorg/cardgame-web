@@ -1,3 +1,4 @@
+import PlayCard from "../PlayCard";
 
 export enum RoundState {
     WAITING_FOR_PROMPT,
@@ -9,5 +10,5 @@ export enum RoundState {
 export default interface Round {
     index: number;
     stateTimerStart: number;
-    
+    playedCards: PlayCard[];
 }
