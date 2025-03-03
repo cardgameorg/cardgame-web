@@ -6,8 +6,9 @@ import GameRoom from '../lib/entity/game/Room';
 import Player from '../lib/entity/game/Player';
 import { useAuth } from './AuthContext';
 import { usePopups } from './PopupContext';
+import { API_URL } from '../lib/api/fetch';
 
-const SOCKET_URL = 'http://localhost:8080/ws';
+const SOCKET_URL = `${API_URL}/ws`;
 
 export interface GameContextType {
   room: GameRoom | null;
@@ -16,10 +17,8 @@ export interface GameContextType {
   createRoom: () => void;
   messages: string[];
   sendMessage: (topic: string, message: any) => void;
+  stompClient: Client | null;
 }
-
-
-// SUBSCRIBE TO /USER/{USERID}/QUEUE/MESSAGES
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
@@ -114,7 +113,7 @@ export const GameContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
 
 
-  return <GameContext.Provider value={{ room, self, joinRoom, createRoom, messages, sendMessage}}>{children}</GameContext.Provider>;
+  return <GameContext.Provider value={{ stompClient, room, self, joinRoom, createRoom, messages, sendMessage}}>{children}</GameContext.Provider>;
 };
 
 export const useGameContext = (): GameContextType => {

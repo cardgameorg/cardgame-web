@@ -1,7 +1,9 @@
 
+export const API_URL = `${window.location.protocol}//${window.location.hostname}:8080`;
+
 export default async function FetchAPI(path: string, method: string, body: any): Promise<Response | null> {
     try {
-      const response = await fetch("http://localhost:8080/" + path, {
+      const response = await fetch(`${API_URL}/${path}`, {
         method: method,
         credentials: "include",
         headers: {

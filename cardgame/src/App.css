@@ -1,4 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
 @import 'tailwindcss';
+
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  body {
+    font-family: 'IBM Plex Mono'  ;
+  }
+}
+
+
 
 #root {
   height: 100vh;
