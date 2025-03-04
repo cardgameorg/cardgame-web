@@ -85,28 +85,30 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, friendUsername }
 
   return (
     <Modal
-    style={{
-      overlay: {
-        backgroundColor: '#23232323', // Removes backdrop
-      },
-    }}
+      style={{
+        overlay: {
+          backgroundColor: '#23232323', // Removes backdrop
+        },
+      }}
       isOpen={isOpen}
       onRequestClose={onClose}
       className="flex justify-center content-center items-center w-full h-full backdrop-blur-sm"
     >
-      <div className="h-1/2 w-1/2 bg-black flex flex-col p-5 rounded-4xl shadow-lg shadow-black">
-        <div className='flex flex-row justify-between pr-6'>
-          <p className="text-2xl pb-2">
+      <div className="h-3/5 w-1/2 bg-black flex flex-col p-5 rounded-4xl shadow-lg shadow-black">
+        <div className="flex flex-row justify-between px-2 py-4">
+          <p className="text-2xl pb-2 self-center">
             Chat with <span className="text-[#4931CE] font-black">{friendUsername}</span>
           </p>
-          <button onClick={onClose} className='align-self-end'>Close</button>
+          <button onClick={onClose} className=" self-center bg-red-900 px-4 py-2 rounded-xl hover:bg-red-700 hover:shadow-red-700 shadow-md hover:cursor-pointer">
+            Close
+          </button>
         </div>
-        <div className="flex flex-col overflow-y-scroll no-scrollbar rounded-xl">
+        <div className="flex flex-col overflow-y-scroll no-scrollbar rounded-xl h-full">
           <div>
             {messages.map((msg, index) => (
               <div key={index} className="py-1">
-                <strong className={`${msg.user.username === user!.username ? 'text-[#777777]' : 'text-[#4931CE]'}`}>
-                  {msg.user.username}:
+                <strong className={`${msg.user.username === user!.username ? 'text-[#777777]' : 'text-highlight'}`}>
+                  {msg.user.username + ': '}
                 </strong>
                 {msg.message}
               </div>
@@ -115,15 +117,23 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, friendUsername }
           {/* This div is used as the marker for the scroll to the bottom */}
           <div ref={messagesEndRef} />
         </div>
-        <div className="w-full flex flex-row justify-between pt-2 pr-6">
+        <div className="w-full flex flex-row justify-between pt-2 pr-2 ">
           <input
-            className="w-9/12 p-2"
+            className="w-full py-2 px-4 outline-none focus:bg-primary-bg shadow-lg rounded-xl"
             type="text"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
             placeholder="Type a message..."
           />
-          <button onClick={sendMessage}>Send</button>
+          <button
+            onClick={sendMessage}
+            className="ml-5 py-4 px-8 bg-highlight-secondary rounded-xl hover:cursor-pointer hover:bg-highlight 
+            hover:shadow-highlight-secondary hover:shadow-md active:bg-highlight-secondary "
+          >
+            Send
+          </button>
         </div>
       </div>
     </Modal>

@@ -80,7 +80,7 @@ export default function ActiveUsers() {
           icon={visible ? faUpLong : faDownLong}
           className="self-center p-3 rounded-full bg-[#31218C] hover:bg-[#4931CE] hover:cursor-pointer hover:shadow-[#4931CE] hover:shadow-md aspect-square"
         />
-        <p className="text-xl font-bold self-center p-2">Active users</p>
+        <p className="text-xl font-bold self-center p-2 pointer-events-none">Active users ({filterOutCurrentUser(activeUsers,user!).length})</p>
       </div>
       {visible &&
         filterOutCurrentUser(activeUsers, user!).map((usr) => (

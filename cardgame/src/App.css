@@ -22,12 +22,31 @@
 #root {
   height: 100vh;
   width: 100vw;
+  background-image: url("../Group\ 29.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 150%;
 }
 body {
   height: 100vh;
   width: 100vw;
   background-color: #111;
   color: #eee;
+}
+
+@theme {
+  --color-primary-bg: #111;
+  --color-secondary-bg: #1a1a1a;
+  --color-highlight: #4931CE;
+  --color-highlight-secondary: #31218C;
+}
+
+.bg-primary {
+  background-color: #111;
+}
+
+.bg-secondary {
+  background-color: #1a1a1a;
 }
 
 .gradientbg {
