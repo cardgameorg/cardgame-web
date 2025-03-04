@@ -15,6 +15,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading,setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const {addPopup} = usePopups();
 
@@ -27,12 +28,13 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
           setUser(data);
           addPopup("Üdv " + data.username + "!")
         } else {
-          navigate("/login");
+          // navigate("/login");
         }
       } catch (error) {
         console.error("Authentication error:", error);
-        navigate("/login");
+        // navigate("/login");
       }
+      setIsLoading(false);
     };
     if (user === null) {
       authenticateUser();
@@ -85,7 +87,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   return (
     <AuthContext.Provider value={{ user, login, register, logout }}>
-      {children}
+      {isLoading? <div className="w-screen h-screen flex content-center justify-center"><p className="self-center">Loading user data..</p></div> : children}
     </AuthContext.Provider>
   );
 };

@@ -7,7 +7,6 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -15,17 +14,44 @@
   body {
     font-family: 'IBM Plex Mono'  ;
   }
+  .small-scrollbar::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  .small-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .small-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5); /* Adjust color as needed */
+    border-radius: 3px;
+  }
+
+  /* Firefox */
+  .small-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+  }
+
+  .scroll-horizontal {
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
 }
-
-
 
 #root {
   height: 100vh;
   width: 100vw;
   background-image: url("../Group\ 29.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 150%;
+  position: fixed; /* Keeps it fixed on the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* background-image: url('your-image.jpg'); */
+    background-size: 150%; /* Zooms in 150% */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat;
 }
 body {
   height: 100vh;
@@ -37,8 +63,15 @@ body {
 @theme {
   --color-primary-bg: #111;
   --color-secondary-bg: #1a1a1a;
+  --color-main-text: #EEEEEE;
+  --color-primary-text: #bbb;
+  --color-secondary-text: #777;
   --color-highlight: #4931CE;
   --color-highlight-secondary: #31218C;
+  --color-highlight-toprated: #ce8531;
+  --color-highlight-family-friendly: #6dae1d;
+  --drop-shadow-logo: 0 4px 6px #4931CEcc;
+  --shadow-center: 0 0 10px 5px var(--tw-shadow-color);
 }
 
 .bg-primary {
